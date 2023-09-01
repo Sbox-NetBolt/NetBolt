@@ -1,5 +1,6 @@
 ﻿using NetBolt.Exceptions;
 using NetBolt.Glue;
+using NetBolt.Tests.Shared.Mocks;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using Xunit;

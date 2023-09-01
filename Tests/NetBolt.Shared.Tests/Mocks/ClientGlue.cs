@@ -4,7 +4,7 @@ using NetBolt.Glue.Logging;
 using System;
 using System.Collections.Generic;
 
-namespace NetBolt.Tests.Shared;
+namespace NetBolt.Tests.Shared.Mocks;
 
 internal sealed class ClientGlue : INetBoltGlue
 {

@@ -1,7 +1,7 @@
 ﻿using NetBolt.Glue;
 using NetBolt.Messaging;
 
-namespace NetBolt.Tests.Shared;
+namespace NetBolt.Tests.Shared.Mocks;
 
 internal sealed class ClientConnection : IClientConnection
 {

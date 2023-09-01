@@ -1,4 +1,5 @@
 ﻿using NetBolt.Glue;
+using NetBolt.Tests.Shared.Mocks;
 using System;
 using Xunit;
 

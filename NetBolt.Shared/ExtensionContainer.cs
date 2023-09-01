@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 
-namespace NetBolt.Server;
+namespace NetBolt;
 
 public sealed class ExtensionContainer<TExtensionBase> : IEnumerable<TExtensionBase> where TExtensionBase : IExtension
 {

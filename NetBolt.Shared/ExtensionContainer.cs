@@ -14,7 +14,7 @@ public sealed class ExtensionContainer<TExtensionBase> : IEnumerable<TExtensionB
 	public TExtension AddExtension<TExtension>() where TExtension : TExtensionBase, new()
 	{
 		if ( HasExtension<TExtension>() )
-			throw new ArgumentException( $"An instance of {typeof( TExtension )} is already contained" );
+			throw new ArgumentException( $"An instance of {typeof( TExtension )} is already contained", nameof( TExtension ) );
 
 		var newExtension = new TExtension();
 		Extensions = Extensions.Add( newExtension );

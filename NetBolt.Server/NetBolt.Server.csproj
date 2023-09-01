@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <LangVersion>11</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <AssemblyName>NetBolt.Server</AssemblyName>
+    <RootNamespace>NetBolt.Server</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="deniszykov.WebSocketListener" Version="4.2.16" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetBolt.Shared\NetBolt.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

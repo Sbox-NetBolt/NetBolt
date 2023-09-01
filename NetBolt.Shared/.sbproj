@@ -1,0 +1,28 @@
+{
+  "Title": "NetBolt Shared",
+  "Type": "library",
+  "Org": "netbolt",
+  "Ident": "shared",
+  "Tags": null,
+  "Schema": 1,
+  "HasAssets": true,
+  "AssetsPath": "",
+  "Resources": null,
+  "MenuResources": null,
+  "HasCode": true,
+  "CodePath": ".",
+  "PackageReferences": [],
+  "EditorReferences": null,
+  "Metadata": {
+    "ProjectTemplate": null,
+    "CsProjName": "NetBolt.Shared_generated",
+    "Compiler": {
+      "RootNamespace": "NetBolt.Shared",
+      "DefineConstants": "SANDBOX;ADDON;DEBUG",
+      "NoWarn": "1701;1702;",
+      "Nullables": true,
+      "References": [],
+      "DistinctReferences": []
+    }
+  }
+}

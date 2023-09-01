@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <LangVersion>11</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <AssemblyName>NetBolt.NetworkableExtension</AssemblyName>
+    <RootNamespace>NetBolt.NetworkableExtension</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\NetBolt.Shared\NetBolt.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

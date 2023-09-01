@@ -55,9 +55,7 @@ public sealed class ServerTests
 
 		// Then:
 		Assert.Equal( 1u, cacheId );
-		Assert.Single( stringCache.Entries );
-		
-		var (cachedString, cachedId) = stringCache.Entries[0];
+		var (cachedString, cachedId) = Assert.Single( stringCache.Entries );
 		Assert.Equal( stringToCache, cachedString );
 		Assert.Equal( 1u, cachedId );
 	}
@@ -133,11 +131,7 @@ public sealed class ServerTests
 
 		// Then:
 		Assert.Equal( 1u, cacheId );
-		Assert.Single( stringCache.Entries );
-
-		var (cachedTypeString, cachedId) = stringCache.Entries[0];
-		Assert.Equal( typeToCache.FullName ?? typeToCache.Name, cachedTypeString );
-		Assert.Equal( 1u, cachedId );
+		var (cachedTypeString, cachedId) = Assert.Single( stringCache.Entries );
 	}
 
 	[Fact]

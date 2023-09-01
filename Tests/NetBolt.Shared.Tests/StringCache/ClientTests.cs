@@ -23,9 +23,7 @@ public sealed class ClientTests
 		stringCache.Swap( entries );
 
 		// Then:
-		Assert.Single( stringCache.Entries );
-
-		var (cachedString, cachedId) = stringCache.Entries[0];
+		var (cachedString, cachedId) = Assert.Single( stringCache.Entries );
 		Assert.Equal( entryString, cachedString );
 		Assert.Equal( entryId, cachedId );
 	}

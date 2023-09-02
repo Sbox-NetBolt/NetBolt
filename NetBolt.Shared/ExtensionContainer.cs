@@ -29,15 +29,17 @@ public sealed class ExtensionContainer<TExtensionBase> : IEnumerable<TExtensionB
 		Extensions = Extensions.Add( extension );
 	}
 
-	public bool HasExtension<TExtension>() where TExtension : TExtensionBase => HasExtension( typeof( TExtension ) );
-	public bool HasExtension( Type type )
+	public bool HasExtension<TExtension>( bool fuzzy = false ) where TExtension : TExtensionBase => HasExtension( typeof( TExtension ), fuzzy );
+	public bool HasExtension( Type type, bool fuzzy = false )
 	{
 		if ( !type.IsAssignableTo( typeof( TExtensionBase ) ) )
 			throw new ArgumentException( $"The type {type} is not assignable to {typeof( TExtensionBase )}", nameof( type ) );
 
 		foreach ( var extension in Extensions )
 		{
-			if ( extension.GetType() == type )
+			if ( fuzzy && extension.GetType().IsAssignableTo( type ) )
+				return true;
+			else if ( !fuzzy && extension.GetType() == type )
 				return true;
 		}
 
@@ -46,6 +48,28 @@ public sealed class ExtensionContainer<TExtensionBase> : IEnumerable<TExtensionB
 
 	public bool TryGetExtension<TExtension>( [NotNullWhen( true )] out TExtension? extension ) where TExtension : TExtensionBase
 	{
+		var tType = typeof( TExtension );
+		foreach ( var containedExtension in Extensions )
+		{
+			if ( containedExtension.GetType() != tType )
+				continue;
+
+			extension = (TExtension)containedExtension;
+			return true;
+		}
+
+		extension = default;
+		return false;
+	}
+
+	public bool TryGetExtension<TExtension>( bool fuzzy, [NotNullWhen( true )] out TExtension? extension ) where TExtension : TExtensionBase
+	{
+		if ( !fuzzy )
+		{
+			var result = TryGetExtension( out extension );
+			return result;
+		}
+
 		foreach ( var containedExtension in Extensions )
 		{
 			if ( containedExtension is not TExtension )

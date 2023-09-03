@@ -10,17 +10,17 @@ public class NetworkMessageWriter : BinaryWriter
 {
 	public INetBoltGlue Glue { get; }
 
-	internal NetworkMessageWriter( Stream output, INetBoltGlue glue ) : base( output )
+	public NetworkMessageWriter( Stream output, INetBoltGlue glue ) : base( output )
 	{
 		Glue = glue;
 	}
 
-	internal NetworkMessageWriter( Stream output, Encoding encoding, INetBoltGlue glue ) : base( output, encoding )
+	public NetworkMessageWriter( Stream output, Encoding encoding, INetBoltGlue glue ) : base( output, encoding )
 	{
 		Glue = glue;
 	}
 
-	internal NetworkMessageWriter( Stream output, Encoding encoding, bool leaveOpen, INetBoltGlue glue ) : base( output, encoding, leaveOpen )
+	public NetworkMessageWriter( Stream output, Encoding encoding, bool leaveOpen, INetBoltGlue glue ) : base( output, encoding, leaveOpen )
 	{
 		Glue = glue;
 	}

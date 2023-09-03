@@ -10,17 +10,17 @@ public class NetworkMessageReader : BinaryReader
 {
 	public INetBoltGlue Glue { get; }
 
-	internal NetworkMessageReader( Stream input, INetBoltGlue glue ) : base( input )
+	public NetworkMessageReader( Stream input, INetBoltGlue glue ) : base( input )
 	{
 		Glue = glue;
 	}
 
-	internal NetworkMessageReader( Stream input, Encoding encoding, INetBoltGlue glue ) : base( input, encoding )
+	public NetworkMessageReader( Stream input, Encoding encoding, INetBoltGlue glue ) : base( input, encoding )
 	{
 		Glue = glue;
 	}
 
-	internal NetworkMessageReader( Stream input, Encoding encoding, bool leaveOpen, INetBoltGlue glue ) : base( input, encoding, leaveOpen )
+	public NetworkMessageReader( Stream input, Encoding encoding, bool leaveOpen, INetBoltGlue glue ) : base( input, encoding, leaveOpen )
 	{
 		Glue = glue;
 	}

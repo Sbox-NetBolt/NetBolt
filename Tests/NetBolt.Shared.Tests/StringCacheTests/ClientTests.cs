@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using Xunit;
 
-namespace NetBolt.Tests.Shared.StringCache;
+namespace NetBolt.Tests.Shared.StringCacheTests;
 
 public sealed class ClientTests
 {
@@ -17,7 +17,7 @@ public sealed class ClientTests
 		// Given:
 		const string entryString = "Hello, World!";
 		const uint entryId = 1;
-		var stringCache = new NetBolt.StringCache( glue );
+		var stringCache = new StringCache( glue );
 		var entries = ImmutableArray.Create( new KeyValuePair<string, uint>( entryString, entryId ) );
 
 		// When:
@@ -34,7 +34,7 @@ public sealed class ClientTests
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new NetBolt.StringCache( glue );
+		var stringCache = new StringCache( glue );
 
 		// When:
 		void Execute()
@@ -51,7 +51,7 @@ public sealed class ClientTests
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new NetBolt.StringCache( glue );
+		var stringCache = new StringCache( glue );
 
 		// When:
 		void Execute()

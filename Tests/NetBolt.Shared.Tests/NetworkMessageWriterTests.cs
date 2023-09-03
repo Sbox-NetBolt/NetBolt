@@ -1,4 +1,5 @@
-﻿using NetBolt.Shared.Extensions;
+﻿using NetBolt.Messaging;
+using NetBolt.Shared.Extensions;
 using NetBolt.Tests.Shared.Mocks;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using Xunit;
 
 namespace NetBolt.Tests.Shared;
 
-public sealed class NetworkMessageWriter
+public sealed class NetworkMessageWriterTests
 {
 	#region Test data
 	public static IEnumerable<object[]> StringsAndEncodings()
@@ -42,11 +43,11 @@ public sealed class NetworkMessageWriter
 
 		var cacheEnabledGlue = new ServerGlue();
 		cacheEnabledGlue.StringCachingEnabled = true;
-		cacheEnabledGlue.StringCache = new NetBolt.StringCache( cacheEnabledGlue );
+		cacheEnabledGlue.StringCache = new StringCache( cacheEnabledGlue );
 		var cacheId = cacheEnabledGlue.StringCache.Add( stringToWrite );
 
 		using var writeStream = new MemoryStream();
-		using var writer = new Messaging.NetworkMessageWriter( writeStream, cacheEnabledGlue );
+		using var writer = new NetworkMessageWriter( writeStream, cacheEnabledGlue );
 
 		// When:
 		writer.WriteCacheString( stringToWrite );
@@ -69,10 +70,10 @@ public sealed class NetworkMessageWriter
 
 		var cacheEnabledGlue = new ServerGlue();
 		cacheEnabledGlue.StringCachingEnabled = true;
-		cacheEnabledGlue.StringCache = new NetBolt.StringCache( cacheEnabledGlue );
+		cacheEnabledGlue.StringCache = new StringCache( cacheEnabledGlue );
 
 		using var stream = new MemoryStream();
-		using var writer = new Messaging.NetworkMessageWriter( stream, cacheEnabledGlue );
+		using var writer = new NetworkMessageWriter( stream, cacheEnabledGlue );
 
 		// When:
 		void Execute()
@@ -94,7 +95,7 @@ public sealed class NetworkMessageWriter
 		var cacheDisabledGlue = new ServerGlue();
 
 		using var writeStream = new MemoryStream();
-		using var writer = new Messaging.NetworkMessageWriter( writeStream, encoding, cacheDisabledGlue );
+		using var writer = new NetworkMessageWriter( writeStream, encoding, cacheDisabledGlue );
 
 		// When:
 		writer.WriteCacheString( stringToWrite );
@@ -118,7 +119,7 @@ public sealed class NetworkMessageWriter
 		// Given:
 		const string stringToWrite = null!;
 		const string writeCacheStringParameterName = "str";
-		using var writer = new Messaging.NetworkMessageWriter( Stream.Null, new ServerGlue() );
+		using var writer = new NetworkMessageWriter( Stream.Null, new ServerGlue() );
 
 		// When:
 		void Execute()
@@ -141,11 +142,11 @@ public sealed class NetworkMessageWriter
 
 		var cacheEnabledGlue = new ServerGlue();
 		cacheEnabledGlue.StringCachingEnabled = true;
-		cacheEnabledGlue.StringCache = new NetBolt.StringCache( cacheEnabledGlue );
+		cacheEnabledGlue.StringCache = new StringCache( cacheEnabledGlue );
 		var cacheId = cacheEnabledGlue.StringCache.Add( typeToWrite );
 
 		using var writeStream = new MemoryStream();
-		using var writer = new Messaging.NetworkMessageWriter( writeStream, cacheEnabledGlue );
+		using var writer = new NetworkMessageWriter( writeStream, cacheEnabledGlue );
 
 		// When:
 		writer.Write( typeToWrite );
@@ -168,10 +169,10 @@ public sealed class NetworkMessageWriter
 
 		var cacheEnabledGlue = new ServerGlue();
 		cacheEnabledGlue.StringCachingEnabled = true;
-		cacheEnabledGlue.StringCache = new NetBolt.StringCache( cacheEnabledGlue );
+		cacheEnabledGlue.StringCache = new StringCache( cacheEnabledGlue );
 
 		using var stream = new MemoryStream();
-		using var writer = new Messaging.NetworkMessageWriter( stream, cacheEnabledGlue );
+		using var writer = new NetworkMessageWriter( stream, cacheEnabledGlue );
 
 		// When:
 		void Execute()
@@ -194,7 +195,7 @@ public sealed class NetworkMessageWriter
 		var cacheDisabledGlue = new ServerGlue();
 
 		using var writeStream = new MemoryStream();
-		using var writer = new Messaging.NetworkMessageWriter( writeStream, encoding, cacheDisabledGlue );
+		using var writer = new NetworkMessageWriter( writeStream, encoding, cacheDisabledGlue );
 
 		// When:
 		writer.Write( typeToWrite );
@@ -218,7 +219,7 @@ public sealed class NetworkMessageWriter
 		// Given:
 		Type typeToWrite = null!;
 		const string writeTypeParameterName = "type";
-		using var writer = new Messaging.NetworkMessageWriter( Stream.Null, new ServerGlue() );
+		using var writer = new NetworkMessageWriter( Stream.Null, new ServerGlue() );
 
 		// When:
 		void Execute()

@@ -18,13 +18,13 @@ internal sealed class ClientGlue : INetBoltGlue
 
 	public bool StringCachingEnabled { get; internal set; }
 
-	public NetBolt.StringCache StringCache { get; internal set; }
+	public StringCache StringCache { get; internal set; }
 
-	internal ClientGlue( IClientConnection? clientConnection = null, NetBolt.StringCache? stringCache = null )
+	internal ClientGlue( IClientConnection? clientConnection = null, StringCache? stringCache = null )
 	{
 		ClientConnection = clientConnection ?? new ClientConnection();
 		StringCachingEnabled = stringCache is not null;
-		StringCache = stringCache ?? new NetBolt.StringCache( this );
+		StringCache = stringCache ?? new StringCache( this );
 	}
 
 	public object? CreateInstance( Type type )

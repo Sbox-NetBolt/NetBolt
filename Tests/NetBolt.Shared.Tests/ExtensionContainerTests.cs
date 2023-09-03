@@ -4,7 +4,7 @@ using Xunit;
 
 namespace NetBolt.Tests.Shared;
 
-public sealed class ExtensionContainer
+public sealed class ExtensionContainerTests
 {
 	#region AddExtension
 	#region AddExtension<T>

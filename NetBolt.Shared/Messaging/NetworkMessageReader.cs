@@ -43,10 +43,7 @@ public class NetworkMessageReader : BinaryReader
 
 		var id = ReadUInt32();
 		if ( !Glue.StringCache.TryGetString( id, out var str ) )
-		{
-			Glue.StringCache.Dump();
 			throw new KeyNotFoundException( $"There is no ID {id} in the string cache" );
-		}
 
 		return str;
 	}

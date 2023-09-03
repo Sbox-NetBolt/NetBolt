@@ -44,10 +44,7 @@ public class NetworkMessageWriter : BinaryWriter
 		}
 
 		if ( !Glue.StringCache.TryGetId( str, out var id ) )
-		{
-			Glue.StringCache.Dump();
 			throw new KeyNotFoundException( $"There is no string \"{str}\" in the string cache" );
-		}
 
 		Write( true );
 		Write( id.Value );

@@ -14,11 +14,11 @@ internal sealed class ServerGlue : INetBoltGlue
 
 	public IClientConnection ClientConnection => throw new RealmException();
 
-	public IServerHost ServerHost { get; init; }
+	public IServerHost ServerHost { get; internal set; }
 
-	public bool StringCachingEnabled { get; init; }
+	public bool StringCachingEnabled { get; internal set; }
 
-	public NetBolt.StringCache StringCache { get; init; }
+	public NetBolt.StringCache StringCache { get; internal set; }
 
 	internal ServerGlue( IServerHost? serverHost = null, NetBolt.StringCache? stringCache = null )
 	{

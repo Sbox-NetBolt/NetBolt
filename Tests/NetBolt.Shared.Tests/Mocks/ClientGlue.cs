@@ -12,13 +12,13 @@ internal sealed class ClientGlue : INetBoltGlue
 
 	public ILogger Logger => NullLogger.Instance;
 
-	public IClientConnection ClientConnection { get; init; }
+	public IClientConnection ClientConnection { get; internal set; }
 
 	public IServerHost ServerHost => throw new RealmException();
 
-	public bool StringCachingEnabled { get; init; }
+	public bool StringCachingEnabled { get; internal set; }
 
-	public NetBolt.StringCache StringCache { get; init; }
+	public NetBolt.StringCache StringCache { get; internal set; }
 
 	internal ClientGlue( IClientConnection? clientConnection = null, NetBolt.StringCache? stringCache = null )
 	{

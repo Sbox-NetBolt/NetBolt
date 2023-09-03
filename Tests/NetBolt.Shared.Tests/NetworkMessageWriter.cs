@@ -8,7 +8,7 @@ using Xunit;
 
 namespace NetBolt.Tests.Shared;
 
-public class NetworkMessageWriter
+public sealed class NetworkMessageWriter
 {
 	#region Test data
 	public static IEnumerable<object[]> StringsAndEncodings()

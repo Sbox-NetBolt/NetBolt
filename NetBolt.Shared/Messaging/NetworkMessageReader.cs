@@ -41,6 +41,9 @@ public class NetworkMessageReader : BinaryReader
 		if ( !ReadBoolean() )
 			return ReadString();
 
+		if ( !Glue.StringCachingEnabled )
+			throw new InvalidOperationException( "String caching is disabled" );
+
 		var id = ReadUInt32();
 		if ( !Glue.StringCache.TryGetString( id, out var str ) )
 			throw new KeyNotFoundException( $"There is no ID {id} in the string cache" );

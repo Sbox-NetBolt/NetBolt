@@ -127,14 +127,4 @@ public sealed class StringCache
 		str = null;
 		return false;
 	}
-
-	public void Dump()
-	{
-		if ( !glue.Logger.IsEnabled( LoggerLevel.Debug ) )
-			return;
-
-		glue.Logger.Debug( $"{nameof( StringCache )} dump ({Entries.Length} entries)" );
-		foreach ( var (str, id) in Entries )
-			glue.Logger.Debug( $"{str}: {id}" );
-	}
 }

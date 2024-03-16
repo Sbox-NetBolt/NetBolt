@@ -48,7 +48,7 @@ public readonly struct ClientIdentifier : IEquatable<ClientIdentifier>
 		if ( !Enum.TryParse<Platform>( parts[0], true, out var platform ) )
 			return false;
 
-		if ( !long.TryParse( parts[0], out var identifier ) )
+		if ( !long.TryParse( parts[1], out var identifier ) )
 			return false;
 
 		parsedIdentifier = new ClientIdentifier( platform, identifier );

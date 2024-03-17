@@ -9,7 +9,6 @@ namespace NetBolt.Messaging;
 
 public abstract class NetworkMessage
 {
-	public const int HeaderSize = sizeof( bool ) + sizeof( char ) * 256;
 	private static readonly ConcurrentDictionary<Type, int> headerSizes = new();
 
 	public virtual bool CacheTypeString => true;

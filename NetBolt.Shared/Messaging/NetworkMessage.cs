@@ -1,6 +1,7 @@
 ﻿using NetBolt.Glue;
 using NetBolt.Messaging.Messages;
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Text;
 
@@ -9,19 +10,31 @@ namespace NetBolt.Messaging;
 public abstract class NetworkMessage
 {
 	public const int HeaderSize = sizeof( bool ) + sizeof( char ) * 256;
+	private static readonly ConcurrentDictionary<Type, int> headerSizes = new();
 
 	public virtual bool CacheTypeString => true;
 
 	public abstract void Serialize( NetworkMessageWriter writer );
 	public abstract void Deserialize( NetworkMessageReader reader );
 
-	public static int GetHeaderSize<T>( INetBoltGlue glue ) where T : NetworkMessage, new() => GetHeaderSize( glue, new T(), Encoding.Default );
-	public static int GetHeaderSize<T>( INetBoltGlue glue, Encoding encoding ) where T : NetworkMessage, new() => GetHeaderSize( glue, new T(), encoding );
+	public static int GetHeaderSize<T>( INetBoltGlue glue ) where T : NetworkMessage, new() => GetHeaderSize<T>( glue, Encoding.Default );
+	public static int GetHeaderSize<T>( INetBoltGlue glue, Encoding encoding ) where T : NetworkMessage, new()
+	{
+		if ( headerSizes.TryGetValue( typeof( T ), out var cachedSize ) )
+			return cachedSize;
+
+		return GetHeaderSize( glue, new T(), encoding );
+	}
+
 	public static int GetHeaderSize( INetBoltGlue glue, NetworkMessage message ) => GetHeaderSize( glue, message, Encoding.Default );
 	public static int GetHeaderSize( INetBoltGlue glue, NetworkMessage message, Encoding encoding )
 	{
 		ArgumentNullException.ThrowIfNull( message, nameof( message ) );
 		ArgumentNullException.ThrowIfNull( encoding, nameof( encoding ) );
+
+		var messageType = message.GetType();
+		if ( headerSizes.TryGetValue( messageType, out var cachedSize ) )
+			return cachedSize;
 
 		var size = 0;
 		if ( message.CacheTypeString )
@@ -29,7 +42,6 @@ public abstract class NetworkMessage
 			size += sizeof( bool ); // Cache bool.
 			if ( !glue.StringCachingEnabled )
 			{
-				var messageType = message.GetType();
 				size += encoding.GetByteCount( messageType.FullName ?? messageType.Name ); // Literal string encoded.
 				size += 1; // Null byte for string.
 			}
@@ -38,7 +50,6 @@ public abstract class NetworkMessage
 		}
 		else
 		{
-			var messageType = message.GetType();
 			size += encoding.GetByteCount( messageType.FullName ?? messageType.Name ); // Literal string encoded.
 			size += 1; // Null byte for string.
 		}
@@ -46,6 +57,7 @@ public abstract class NetworkMessage
 		if ( message is PartialMessage )
 			size += PartialMessage.PartialHeaderSize;
 
+		headerSizes.TryAdd( messageType, size );
 		return size;
 	}
 

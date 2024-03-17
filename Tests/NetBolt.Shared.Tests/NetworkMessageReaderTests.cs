@@ -2,8 +2,6 @@
 using NetBolt.Tests.Shared.Mocks;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using Xunit;
 
 namespace NetBolt.Tests.Shared;
@@ -19,7 +17,7 @@ public class NetworkMessageReaderTests
 		var cachedTypeStr = cachedType.FullName ?? cachedType.Name;
 		const uint cacheId = 1;
 
-		using var stream = CreateStream( testDataWriter =>
+		using var stream = TestUtility.CreateStream( testDataWriter =>
 		{
 			testDataWriter.Write( true );
 			testDataWriter.Write( cacheId );
@@ -44,7 +42,7 @@ public class NetworkMessageReaderTests
 		const string cachedBadTypeStr = "Some.Unknown.Type";
 		const uint cacheId = 1;
 
-		using var stream = CreateStream( testDataWriter =>
+		using var stream = TestUtility.CreateStream( testDataWriter =>
 		{
 			testDataWriter.Write( true );
 			testDataWriter.Write( cacheId );
@@ -74,7 +72,7 @@ public class NetworkMessageReaderTests
 		const string cacheStr = "Hello, World!";
 		const uint cacheId = 1;
 
-		using var stream = CreateStream( testDataWriter =>
+		using var stream = TestUtility.CreateStream( testDataWriter =>
 		{
 			testDataWriter.Write( true );
 			testDataWriter.Write( cacheId );
@@ -98,7 +96,7 @@ public class NetworkMessageReaderTests
 		// Given:
 		const string uncachedStr = "Hello, World!";
 
-		using var stream = CreateStream( testDataWriter =>
+		using var stream = TestUtility.CreateStream( testDataWriter =>
 		{
 			testDataWriter.Write( false );
 			testDataWriter.Write( uncachedStr );
@@ -117,7 +115,7 @@ public class NetworkMessageReaderTests
 	public void ReadCacheStringThrowsOnDisabledCache()
 	{
 		// Given:
-		using var stream = CreateStream( testDataWriter =>
+		using var stream = TestUtility.CreateStream( testDataWriter =>
 		{
 			testDataWriter.Write( true );
 			testDataWriter.Write( (uint)1 );
@@ -139,7 +137,7 @@ public class NetworkMessageReaderTests
 	public void ReadCacheStringThrowsOnInvalidId()
 	{
 		// Given:
-		using var stream = CreateStream( testDataWriter =>
+		using var stream = TestUtility.CreateStream( testDataWriter =>
 		{
 			testDataWriter.Write( true );
 			testDataWriter.Write( (uint)2 );
@@ -160,16 +158,4 @@ public class NetworkMessageReaderTests
 		Assert.Throws<KeyNotFoundException>( Execute );
 	}
 	#endregion
-
-	private Stream CreateStream( Action<BinaryWriter> writeCb )
-	{
-		var stream = new MemoryStream();
-		using ( var writer = new BinaryWriter( stream, Encoding.Default, true ) )
-		{
-			writeCb( writer );
-			stream.Position = 0;
-		}
-
-		return stream;
-	}
 }

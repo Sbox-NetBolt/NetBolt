@@ -292,7 +292,7 @@ public sealed class Client : IClient, IDisposable
 		long messageSize;
 		try
 		{
-			networkMessage = NetworkMessage.Parse( glue, data, networkMessageCharacterEncoding, out messageSize );
+			networkMessage = NetworkMessage.Parse<NetworkMessage>( glue, data, networkMessageCharacterEncoding, out messageSize );
 		}
 		catch ( Exception e )
 		{

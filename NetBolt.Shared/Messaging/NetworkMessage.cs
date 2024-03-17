@@ -87,10 +87,13 @@ public abstract class NetworkMessage
 		message.Serialize( writer );
 	}
 
-	public static NetworkMessage Parse( INetBoltGlue glue, byte[] data ) => Parse( glue, data, Encoding.Default, out _ );
-	public static NetworkMessage Parse( INetBoltGlue glue, byte[] data, out long messageSize ) => Parse( glue, data, Encoding.Default, out messageSize );
-	public static NetworkMessage Parse( INetBoltGlue glue, byte[] data, Encoding encoding ) => Parse( glue, data, encoding, out _ );
-	public static NetworkMessage Parse( INetBoltGlue glue, byte[] data, Encoding encoding, out long messageSize )
+	public static T Parse<T>( INetBoltGlue glue, byte[] data ) where T : NetworkMessage
+		=> Parse<T>( glue, data, Encoding.Default, out _ );
+	public static T Parse<T>( INetBoltGlue glue, byte[] data, out long messageSize ) where T : NetworkMessage
+		=> Parse<T>( glue, data, Encoding.Default, out messageSize );
+	public static T Parse<T>( INetBoltGlue glue, byte[] data, Encoding encoding ) where T : NetworkMessage
+		=> Parse<T>( glue, data, encoding, out _ );
+	public static T Parse<T>( INetBoltGlue glue, byte[] data, Encoding encoding, out long messageSize ) where T : NetworkMessage
 	{
 		ArgumentNullException.ThrowIfNull( data );
 		ArgumentNullException.ThrowIfNull( encoding );
@@ -102,7 +105,7 @@ public abstract class NetworkMessage
 		if ( !type.IsAssignableTo( typeof( NetworkMessage ) ) )
 			throw new InvalidCastException( $"Received type is not assignable to {nameof( NetworkMessage )}" );
 
-		var message = (NetworkMessage)glue.CreateInstance( type )!;
+		var message = (T)glue.CreateInstance( type )!;
 		message.Deserialize( reader );
 		messageSize = stream.Position;
 		return message;

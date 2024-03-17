@@ -301,6 +301,103 @@ public class NetworkMessageTests
 		Assert.Throws<ArgumentException>( writeToStreamParameterName, Execute );
 	}
 	#endregion
+
+	#region Parse
+	[Fact]
+	public void Parse()
+	{
+		// Given:
+		const float property1 = 123;
+		const string property2 = "Hello, World!";
+
+		using var stream = TestUtility.CreateStream( testDataWriter =>
+		{
+			testDataWriter.Write( false );
+			testDataWriter.Write( typeof( CachedTypeNetworkMessage ).FullName ?? typeof( CachedTypeNetworkMessage ).Name );
+			testDataWriter.Write( property1 );
+			testDataWriter.Write( property2 );
+		} );
+
+		var data = ((MemoryStream)stream).ToArray();
+
+		// When:
+		var message = NetworkMessage.Parse<CachedTypeNetworkMessage>( new ServerGlue(), data );
+
+		// Then:
+		Assert.Equal( property1, message.Property1 );
+		Assert.Equal( property2, message.Property2 );
+	}
+
+	[Fact]
+	public void ParseThrowsOnInvalidType()
+	{
+		// Given:
+		using var stream = TestUtility.CreateStream( testDataWriter =>
+		{
+			testDataWriter.Write( false );
+			testDataWriter.Write( typeof( object ).FullName ?? typeof( object ).Name );
+		} );
+
+		var data = ((MemoryStream)stream).ToArray();
+
+		// When:
+		void Execute()
+		{
+			var message = NetworkMessage.Parse<NetworkMessage>( new ServerGlue(), data );
+		}
+
+		// Then:
+		Assert.Throws<InvalidCastException>( Execute );
+	}
+
+	[Fact]
+	public void ParseThrowsOnNullGlue()
+	{
+		// Given:
+		const string parseParameterName = "glue";
+
+		// When:
+		static void Execute()
+		{
+			NetworkMessage.Parse<NetworkMessage>( null!, Array.Empty<byte>() );
+		}
+
+		// Then:
+		Assert.Throws<ArgumentNullException>( parseParameterName, Execute );
+	}
+
+	[Fact]
+	public void ParseThrowsOnNullData()
+	{
+		// Given:
+		const string parseParameterName = "data";
+
+		// When:
+		static void Execute()
+		{
+			NetworkMessage.Parse<NetworkMessage>( new ServerGlue(), null! );
+		}
+
+		// Then:
+		Assert.Throws<ArgumentNullException>( parseParameterName, Execute );
+	}
+
+	[Fact]
+	public void ParseThrowsOnNullEncoding()
+	{
+		// Given:
+		const string parseParameterName = "encoding";
+
+		// When:
+		static void Execute()
+		{
+			NetworkMessage.Parse<NetworkMessage>( new ServerGlue(), Array.Empty<byte>(), null! );
+		}
+
+		// Then:
+		Assert.Throws<ArgumentNullException>( parseParameterName, Execute );
+	}
+	#endregion
 }
 
 file class CachedTypeNetworkMessage : NetworkMessage

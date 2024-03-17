@@ -47,9 +47,10 @@ public sealed class PartialMessage : NetworkMessage
 		byte[] messageBytes, long messageSize, int maxMessageSize,
 		Encoding networkMessageCharacterEncoding, byte[] partialMessageBytes )
 	{
-		ArgumentNullException.ThrowIfNull( messageBytes );
-		ArgumentNullException.ThrowIfNull( networkMessageCharacterEncoding );
-		ArgumentNullException.ThrowIfNull( partialMessageBytes );
+		ArgumentNullException.ThrowIfNull( glue, nameof( glue ) );
+		ArgumentNullException.ThrowIfNull( messageBytes, nameof( messageBytes ) );
+		ArgumentNullException.ThrowIfNull( networkMessageCharacterEncoding, nameof( networkMessageCharacterEncoding ) );
+		ArgumentNullException.ThrowIfNull( partialMessageBytes, nameof( partialMessageBytes ) );
 
 		var partialMessageHeaderSize = GetHeaderSize<PartialMessage>( glue, networkMessageCharacterEncoding );
 		var partialDataPerMessage = maxMessageSize - partialMessageHeaderSize;

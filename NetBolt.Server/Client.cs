@@ -99,9 +99,7 @@ public sealed class Client : IClient, IDisposable
 
 	public void QueueMessage( NetworkMessage message )
 	{
-		if ( disposed )
-			throw new ObjectDisposedException( nameof( Client ) );
-
+		ObjectDisposedException.ThrowIf( disposed, this );
 		ArgumentNullException.ThrowIfNull( message );
 
 		PendingOutgoingMessages.Enqueue( message );
@@ -113,8 +111,7 @@ public sealed class Client : IClient, IDisposable
 
 	public async Task DisconnectAsync()
 	{
-		if ( disposed )
-			throw new ObjectDisposedException( nameof( Client ) );
+		ObjectDisposedException.ThrowIf( disposed, this );
 
 		QueueMessage( new DisconnectMessage( ServerDisconnectReason.Forced ) );
 		await DisconnectAsync( ServerDisconnectReason.Forced );

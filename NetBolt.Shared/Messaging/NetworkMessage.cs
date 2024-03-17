@@ -95,8 +95,9 @@ public abstract class NetworkMessage
 		=> Parse<T>( glue, data, encoding, out _ );
 	public static T Parse<T>( INetBoltGlue glue, byte[] data, Encoding encoding, out long messageSize ) where T : NetworkMessage
 	{
-		ArgumentNullException.ThrowIfNull( data );
-		ArgumentNullException.ThrowIfNull( encoding );
+		ArgumentNullException.ThrowIfNull( glue, nameof( glue ) );
+		ArgumentNullException.ThrowIfNull( data, nameof( data ) );
+		ArgumentNullException.ThrowIfNull( encoding, nameof( encoding ) );
 
 		using var stream = new MemoryStream( data );
 		using var reader = new NetworkMessageReader( stream, encoding, glue );

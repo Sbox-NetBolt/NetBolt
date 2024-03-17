@@ -105,4 +105,9 @@ public abstract class NetworkMessage
 		messageSize = stream.Position;
 		return message;
 	}
+
+	internal static void InvalidateSizeCache()
+	{
+		headerSizes.Clear();
+	}
 }

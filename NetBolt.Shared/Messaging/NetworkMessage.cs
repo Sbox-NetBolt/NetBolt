@@ -29,6 +29,7 @@ public abstract class NetworkMessage
 	public static int GetHeaderSize( INetBoltGlue glue, NetworkMessage message ) => GetHeaderSize( glue, message, Encoding.Default );
 	public static int GetHeaderSize( INetBoltGlue glue, NetworkMessage message, Encoding encoding )
 	{
+		ArgumentNullException.ThrowIfNull( glue, nameof( glue ) );
 		ArgumentNullException.ThrowIfNull( message, nameof( message ) );
 		ArgumentNullException.ThrowIfNull( encoding, nameof( encoding ) );
 
@@ -64,6 +65,7 @@ public abstract class NetworkMessage
 	public static void WriteToStream( INetBoltGlue glue, Stream stream, NetworkMessage message ) => WriteToStream( glue, stream, message, Encoding.Default );
 	public static void WriteToStream( INetBoltGlue glue, Stream stream, NetworkMessage message, Encoding encoding )
 	{
+		ArgumentNullException.ThrowIfNull( glue, nameof( glue ) );
 		ArgumentNullException.ThrowIfNull( stream, nameof( stream ) );
 		ArgumentNullException.ThrowIfNull( message, nameof( message ) );
 		ArgumentNullException.ThrowIfNull( encoding, nameof( encoding ) );

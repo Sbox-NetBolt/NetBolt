@@ -1,5 +1,6 @@
 ﻿using NetBolt.Shared;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace NetBolt.Tests.Shared;
@@ -169,6 +170,20 @@ public sealed class ExtensionContainerTests
 	}
 
 	[Fact]
+	public void HasExtensionFuzzy()
+	{
+		// Given:
+		var container = new ExtensionContainer<IExtension>();
+		container.AddExtension<DerivedExtension>();
+
+		// When:
+		var hasExtension = container.HasExtension<TestExtension>( true );
+
+		// Then:
+		Assert.True( hasExtension );
+	}
+
+	[Fact]
 	public void HasExtensionFail()
 	{
 		// Given:
@@ -245,6 +260,34 @@ public sealed class ExtensionContainerTests
 	}
 
 	[Fact]
+	public void TryGetExtensionFromContainerFuzzy()
+	{
+		// Given:
+		var container = new ExtensionContainer<IExtension>();
+		container.AddExtension<DerivedExtension>();
+
+		// When:
+		var hasExtension = container.TryGetExtension<TestExtension>( true, out var extension );
+
+		// Then:
+		Assert.True( hasExtension );
+		Assert.True( extension is DerivedExtension );
+	}
+
+	[Fact]
+	public void TryGetExtensionFromContainerFuzzyFail()
+	{
+		// Given:
+		var container = new ExtensionContainer<IExtension>();
+
+		// When:
+		var hasExtension = container.TryGetExtension<TestExtension>( true, out var extension );
+
+		// Then:
+		Assert.False( hasExtension );
+	}
+
+	[Fact]
 	public void TryGetExtensionFailsOnBaseTypeWithoutFuzzy()
 	{
 		// Given:
@@ -259,6 +302,23 @@ public sealed class ExtensionContainerTests
 		Assert.Null( extension );
 	}
 	#endregion
+
+	[Fact]
+	public void EnumerateExtensions()
+	{
+		// Given:
+		var container = new ExtensionContainer<IExtension>();
+		container.AddExtension<TestExtension>();
+		container.AddExtension<DerivedExtension>();
+
+		// When:
+		var extensions = container.AsEnumerable().ToArray();
+
+		// Then:
+		Assert.Equal( 2, extensions.Length );
+		Assert.True( extensions[0] is TestExtension );
+		Assert.True( extensions[1] is DerivedExtension );
+	}
 }
 
 file class TestExtension : IExtension

@@ -2,7 +2,6 @@
 using NetBolt.Glue;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 
 namespace NetBolt.Messaging.Messages;
@@ -43,31 +42,28 @@ public sealed class PartialMessage : NetworkMessage
 		PartialData = reader.ReadBytes( reader.ReadInt32() );
 	}
 
-	public static IEnumerable<(PartialMessage PartialMessage, long PartialMessageSize)> CreateFrom( INetBoltGlue glue,
-		byte[] messageBytes, long messageSize, int maxMessageSize,
-		Encoding networkMessageCharacterEncoding, byte[] partialMessageBytes )
+	public static IEnumerable<PartialMessage> CreateFrom( INetBoltGlue glue, ArraySegment<byte> messageBytes, int maxMessageSize, Encoding encoding )
 	{
 		ArgumentNullException.ThrowIfNull( glue, nameof( glue ) );
-		ArgumentNullException.ThrowIfNull( messageBytes, nameof( messageBytes ) );
-		ArgumentNullException.ThrowIfNull( networkMessageCharacterEncoding, nameof( networkMessageCharacterEncoding ) );
-		ArgumentNullException.ThrowIfNull( partialMessageBytes, nameof( partialMessageBytes ) );
+		ArgumentNullException.ThrowIfNull( messageBytes.Array, nameof( messageBytes ) );
+		ArgumentNullException.ThrowIfNull( encoding, nameof( encoding ) );
 
-		var partialMessageHeaderSize = GetHeaderSize<PartialMessage>( glue, networkMessageCharacterEncoding );
+		var partialMessageHeaderSize = GetHeaderSize<PartialMessage>( glue, encoding );
 		var partialDataPerMessage = maxMessageSize - partialMessageHeaderSize;
-		var numMessages = (int)Math.Ceiling( (double)messageSize / partialDataPerMessage );
+		if ( partialDataPerMessage <= 0 )
+			throw new ArgumentException( $"{nameof( maxMessageSize )} is too small, it must be > {partialMessageHeaderSize}", nameof( maxMessageSize ) );
 
-		for ( var i = 0; i < messageSize; i += partialDataPerMessage )
+		var numMessages = (int)Math.Ceiling( (double)maxMessageSize / partialDataPerMessage );
+
+		for ( var i = 0; i < messageBytes.Count; i += partialDataPerMessage )
 		{
 			var startIndex = i;
-			var length = (int)Math.Min( messageSize - startIndex, partialDataPerMessage );
+			var length = Math.Min( messageBytes.Count - startIndex, partialDataPerMessage );
 
-			var partialMessage = new PartialMessage( numMessages, new ArraySegment<byte>( messageBytes, startIndex, length ) );
-			using var partialDataStream = new MemoryStream( partialMessageBytes, true );
+			var partialBytes = messageBytes.Slice( startIndex, length ).ToArray();
+			var partialMessage = new PartialMessage( numMessages, new ArraySegment<byte>( partialBytes ) );
 
-			WriteToStream( glue, partialDataStream, partialMessage, networkMessageCharacterEncoding );
-			var partialMessageSize = partialDataStream.Position;
-
-			yield return (partialMessage, partialMessageSize);
+			yield return partialMessage;
 		}
 	}
 }

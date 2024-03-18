@@ -209,14 +209,18 @@ public sealed class Client : IClient, IDisposable
 
 	private async ValueTask<bool?> SendPartialMessagesAsync( byte[] data, long messageSize )
 	{
-		using var partialData = owner.RentArray();
-
 		try
 		{
-			foreach ( var (partialMessage, partialMessageSize) in PartialMessage.CreateFrom( glue, data, messageSize, maxMessageSize,
-				networkMessageCharacterEncoding, partialData ) )
+			using var partialData = owner.RentArray();
+			using var partialMessageStream = new MemoryStream( partialData );
+
+			foreach ( var partialMessage in PartialMessage.CreateFrom( glue, new ArraySegment<byte>( data, 0, (int)messageSize ),
+				maxMessageSize, networkMessageCharacterEncoding ) )
 			{
-				if ( !await SendMessageAsync( partialData.array.AsMemory( 0, (int)partialMessageSize ) ) )
+				partialMessageStream.Position = 0;
+				NetworkMessage.WriteToStream( glue, partialMessageStream, partialMessage );
+
+				if ( !await SendMessageAsync( partialData.array.AsMemory( 0, (int)partialMessageStream.Position ) ) )
 					return null;
 			}
 		}

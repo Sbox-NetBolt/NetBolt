@@ -65,10 +65,7 @@ public sealed class ExtensionContainer<TExtensionBase> : IEnumerable<TExtensionB
 	public bool TryGetExtension<TExtension>( bool fuzzy, [NotNullWhen( true )] out TExtension? extension ) where TExtension : TExtensionBase
 	{
 		if ( !fuzzy )
-		{
-			var result = TryGetExtension( out extension );
-			return result;
-		}
+			return TryGetExtension( out extension );
 
 		foreach ( var containedExtension in Extensions )
 		{

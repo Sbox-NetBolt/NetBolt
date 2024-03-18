@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <AssemblyName>NetBolt.SboxExtension</AssemblyName>
+    <RootNamespace>NetBolt.SboxExtension</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\NetBolt.Server\NetBolt.Server.csproj" />
+    <ProjectReference Include="..\..\..\NetBolt.Shared\NetBolt.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

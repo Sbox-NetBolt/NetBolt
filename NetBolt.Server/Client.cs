@@ -117,7 +117,7 @@ public sealed class Client : IClient, IDisposable
 		await DisconnectAsync( ServerDisconnectReason.Forced );
 	}
 
-	internal async Task DisconnectAsync( ServerDisconnectReason reason )
+	public async Task DisconnectAsync( ServerDisconnectReason reason )
 	{
 		if ( DisconnectReason is not null || disconnectSemaphore.CurrentCount == 0 )
 			return;

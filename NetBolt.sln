@@ -25,6 +25,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBolt.Shared_generated", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Base Library", "D:\SteamLibrary\steamapps\common\sbox\addons\base\code\Base Library.csproj", "{379C603D-746C-4814-ACBA-980972413218}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetBolt.SboxExtension", "NetBolt.SboxExtension", "{0C33F06B-6CE0-4717-8787-7588F242CEE1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBolt.SboxExtension.Server", "Extensions\NetBolt.SboxExtension\Server\NetBolt.SboxExtension.Server.csproj", "{55F82163-DEEB-4F87-B5D5-15FB6EA0AC01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,10 @@ Global
 		{379C603D-746C-4814-ACBA-980972413218}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{379C603D-746C-4814-ACBA-980972413218}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{379C603D-746C-4814-ACBA-980972413218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55F82163-DEEB-4F87-B5D5-15FB6EA0AC01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55F82163-DEEB-4F87-B5D5-15FB6EA0AC01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55F82163-DEEB-4F87-B5D5-15FB6EA0AC01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55F82163-DEEB-4F87-B5D5-15FB6EA0AC01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +78,8 @@ Global
 		{84B4731E-90B6-40CF-8C75-CE5B29F6ABF8} = {2CFB3E65-CD37-46E9-9B0E-A99A9861AFCE}
 		{2AC487F0-29F7-41B1-BED7-F0857698D8FB} = {2CFB3E65-CD37-46E9-9B0E-A99A9861AFCE}
 		{379C603D-746C-4814-ACBA-980972413218} = {2CFB3E65-CD37-46E9-9B0E-A99A9861AFCE}
+		{0C33F06B-6CE0-4717-8787-7588F242CEE1} = {50B0C546-D35B-4F11-89BA-69D466466855}
+		{55F82163-DEEB-4F87-B5D5-15FB6EA0AC01} = {0C33F06B-6CE0-4717-8787-7588F242CEE1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D68AF3F5-8DBD-46C4-9B59-23008B81DB44}

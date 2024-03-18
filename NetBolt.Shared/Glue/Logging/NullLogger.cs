@@ -15,7 +15,7 @@ public sealed class NullLogger : ILogger
 	}
 
 	/// <inheritdoc/>
-	public void Warning( string message )
+	public void Warning( string message, Exception? exception = null )
 	{
 	}
 
@@ -25,7 +25,7 @@ public sealed class NullLogger : ILogger
 	}
 
 	/// <inheritdoc/>
-	public void Debug( string message )
+	public void Debug( string message, Exception? exception = null )
 	{
 	}
 }

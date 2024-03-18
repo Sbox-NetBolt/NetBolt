@@ -11,6 +11,7 @@ using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -454,11 +455,20 @@ public sealed class NetBoltServer : IServerHost, IDisposable
 
 				clientsWaitingToJoin.Enqueue( new Client( this, clientSocket ) );
 			}
-			catch ( InvalidOperationException e ) when ( e.Message == "WebSocketListener is closed and will not accept new connections." ) { }
+			catch ( InvalidOperationException e )
+			{
+				if ( logger.IsEnabled( LoggerLevel.Debug ) )
+					logger.Debug( "An exception occurred during the handshake of a web socket connection", e );
+			}
+			catch ( IOException e )
+			{
+				if ( logger.IsEnabled( LoggerLevel.Debug ) )
+					logger.Debug( "An exception occurred during the handshake of a web socket connection", e );
+			}
 			catch ( WebSocketException e )
 			{
 				if ( logger.IsEnabled( LoggerLevel.Error ) )
-					logger.Error( "An exception occurred during the handshake of a WebSocket connection", e );
+					logger.Error( "An exception occurred during the handshake of a web socket connection", e );
 			}
 		}
 	}

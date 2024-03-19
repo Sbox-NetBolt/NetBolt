@@ -498,7 +498,10 @@ public sealed class NetBoltServer : IServerHost, IDisposable
 			try
 			{
 				if ( !await extension.OnNegotiateSocketAsync( request, response ) )
+				{
+					logger.Warning( $"Refusing connection from {request.RemoteEndPoint} due to being refused by {extension}" );
 					return false;
+				}
 			}
 			catch ( Exception e )
 			{

@@ -12,24 +12,30 @@ namespace NetBolt.Tests.Shared;
 public sealed class NetworkMessageWriterTests
 {
 	#region Test data
-	public static IEnumerable<object[]> StringsAndEncodings()
+	public static TheoryData<string, Encoding> StringsAndEncodings()
 	{
-		yield return new object[] { "Hello, World!", Encoding.ASCII };
-		yield return new object[] { "Hello, World!", Encoding.BigEndianUnicode };
-		yield return new object[] { "Hello, World!", Encoding.Latin1 };
-		yield return new object[] { "Hello, World!", Encoding.Unicode };
-		yield return new object[] { "Hello, World!", Encoding.UTF32 };
-		yield return new object[] { "Hello, World!", Encoding.UTF8 };
+		return new TheoryData<string, Encoding>
+		{
+			{ "Hello, World!", Encoding.ASCII },
+			{ "Hello, World!", Encoding.BigEndianUnicode },
+			{ "Hello, World!", Encoding.Latin1 },
+			{ "Hello, World!", Encoding.Unicode },
+			{ "Hello, World!", Encoding.UTF32 },
+			{ "Hello, World!", Encoding.UTF8 }
+		};
 	}
 
-	public static IEnumerable<object[]> TypesAndEncodings()
+	public static TheoryData<Type, Encoding> TypesAndEncodings()
 	{
-		yield return new object[] { typeof( object ), Encoding.ASCII };
-		yield return new object[] { typeof( object ), Encoding.BigEndianUnicode };
-		yield return new object[] { typeof( object ), Encoding.Latin1 };
-		yield return new object[] { typeof( object ), Encoding.Unicode };
-		yield return new object[] { typeof( object ), Encoding.UTF32 };
-		yield return new object[] { typeof( object ), Encoding.UTF8 };
+		return new TheoryData<Type, Encoding>
+		{
+			{ typeof( object ), Encoding.ASCII },
+			{ typeof( object ), Encoding.BigEndianUnicode },
+			{ typeof( object ), Encoding.Latin1 },
+			{ typeof( object ), Encoding.Unicode },
+			{ typeof( object ), Encoding.UTF32 },
+			{ typeof( object ), Encoding.UTF8 }
+		};
 	}
 	#endregion
 

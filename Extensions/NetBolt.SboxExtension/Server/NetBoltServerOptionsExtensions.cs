@@ -1,4 +1,6 @@
-﻿namespace NetBolt.Server.Extensions;
+﻿using NetBolt.Server;
+
+namespace NetBolt.Extensions.Sbox;
 
 public static class NetBoltServerOptionsExtensions
 {

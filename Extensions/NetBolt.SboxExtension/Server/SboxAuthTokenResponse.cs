@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace NetBolt.Server;
+namespace NetBolt.Extensions.Sbox;
 
 internal readonly struct SboxAuthTokenResponse
 {

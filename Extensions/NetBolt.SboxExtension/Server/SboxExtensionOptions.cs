@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetBolt.Server;
+namespace NetBolt.Extensions.Sbox;
 
 public sealed class SboxExtensionOptions
 {

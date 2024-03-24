@@ -1,4 +1,6 @@
-﻿namespace NetBolt.Messaging.Messages;
+﻿using NetBolt.Messaging;
+
+namespace NetBolt.Extensions.Sbox;
 
 public sealed class SboxTokenRequestMessage : NetworkMessage
 {

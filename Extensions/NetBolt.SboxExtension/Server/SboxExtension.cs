@@ -1,6 +1,6 @@
 ﻿using NetBolt.Glue.Logging;
 using NetBolt.Messaging;
-using NetBolt.Messaging.Messages;
+using NetBolt.Server;
 using NetBolt.Server.Extensions;
 using System;
 using System.Collections.Concurrent;
@@ -13,7 +13,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using vtortola.WebSockets;
 
-namespace NetBolt.Server;
+namespace NetBolt.Extensions.Sbox;
 
 public sealed class SboxExtension : NetBoltServerExtension
 {

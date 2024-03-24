@@ -24,7 +24,7 @@ internal sealed class ClientGlue : INetBoltGlue
 	{
 		ClientConnection = clientConnection ?? new ClientConnection();
 		StringCachingEnabled = stringCache is not null;
-		StringCache = stringCache ?? new StringCache( this );
+		StringCache = stringCache ?? new StringCache();
 	}
 
 	public object? CreateInstance( Type type )

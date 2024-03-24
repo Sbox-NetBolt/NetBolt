@@ -1,6 +1,4 @@
 ﻿using NetBolt.Exceptions;
-using NetBolt.Glue;
-using NetBolt.Tests.Shared.Mocks;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using Xunit;
@@ -9,8 +7,6 @@ namespace NetBolt.Tests.Shared.StringCacheTests;
 
 public sealed class ClientTests
 {
-	private static readonly INetBoltGlue glue = new ClientGlue();
-
 	[Fact]
 	public void InitCache()
 	{
@@ -18,7 +14,7 @@ public sealed class ClientTests
 		const string entryString = "Hello, World!";
 		const uint entryId = 1;
 		var entries = ImmutableArray.Create( new KeyValuePair<string, uint>( entryString, entryId ) );
-		var stringCache = new StringCache( glue, entries );
+		var stringCache = new StringCache( entries );
 
 		// Then:
 		var (cachedString, cachedId) = Assert.Single( stringCache.Entries );
@@ -32,7 +28,7 @@ public sealed class ClientTests
 		// Given:
 		const string entryString = "Hello, World!";
 		const uint entryId = 1;
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 		var entries = ImmutableArray.Create( new KeyValuePair<string, uint>( entryString, entryId ) );
 
 		// When:
@@ -49,7 +45,7 @@ public sealed class ClientTests
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		void Execute()
@@ -66,7 +62,7 @@ public sealed class ClientTests
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		void Execute()

@@ -23,9 +23,11 @@ public class NetworkMessageReaderTests
 			testDataWriter.Write( cacheId );
 		} );
 
-		var glue = new ClientGlue();
-		glue.StringCache = new StringCache( glue, [new KeyValuePair<string, uint>( cachedTypeStr, cacheId )] );
-		glue.StringCachingEnabled = true;
+		var glue = new ClientGlue
+		{
+			StringCache = new StringCache( [new KeyValuePair<string, uint>( cachedTypeStr, cacheId )] ),
+			StringCachingEnabled = true
+		};
 		using var reader = new NetworkMessageReader( stream, glue );
 
 		// When:
@@ -48,9 +50,11 @@ public class NetworkMessageReaderTests
 			testDataWriter.Write( cacheId );
 		} );
 
-		var glue = new ClientGlue();
-		glue.StringCache = new StringCache( glue, [new KeyValuePair<string, uint>( cachedBadTypeStr, cacheId )] );
-		glue.StringCachingEnabled = true;
+		var glue = new ClientGlue
+		{
+			StringCache = new StringCache( [new KeyValuePair<string, uint>( cachedBadTypeStr, cacheId )] ),
+			StringCachingEnabled = true
+		};
 		using var reader = new NetworkMessageReader( stream, glue );
 
 		// When:
@@ -78,9 +82,11 @@ public class NetworkMessageReaderTests
 			testDataWriter.Write( cacheId );
 		} );
 
-		var glue = new ClientGlue();
-		glue.StringCache = new StringCache( glue, [new KeyValuePair<string, uint>( cacheStr, cacheId )] );
-		glue.StringCachingEnabled = true;
+		var glue = new ClientGlue
+		{
+			StringCache = new StringCache( [new KeyValuePair<string, uint>( cacheStr, cacheId )] ),
+			StringCachingEnabled = true
+		};
 		using var reader = new NetworkMessageReader( stream, glue );
 
 		// When:
@@ -143,9 +149,11 @@ public class NetworkMessageReaderTests
 			testDataWriter.Write( (uint)2 );
 		} );
 
-		var glue = new ClientGlue();
-		glue.StringCache = new StringCache( glue );
-		glue.StringCachingEnabled = true;
+		var glue = new ClientGlue
+		{
+			StringCache = new StringCache(),
+			StringCachingEnabled = true
+		};
 		using var reader = new NetworkMessageReader( stream, glue );
 
 		// When:

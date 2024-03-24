@@ -47,9 +47,11 @@ public sealed class NetworkMessageWriterTests
 		// Given:
 		const string stringToWrite = "Hello, World!";
 
-		var cacheEnabledGlue = new ServerGlue();
-		cacheEnabledGlue.StringCachingEnabled = true;
-		cacheEnabledGlue.StringCache = new StringCache( cacheEnabledGlue );
+		var cacheEnabledGlue = new ServerGlue
+		{
+			StringCachingEnabled = true,
+			StringCache = new StringCache()
+		};
 		var cacheId = cacheEnabledGlue.StringCache.Add( stringToWrite );
 
 		using var writeStream = new MemoryStream();
@@ -74,9 +76,11 @@ public sealed class NetworkMessageWriterTests
 		// Given:
 		const string stringToWrite = "Hello, World!";
 
-		var cacheEnabledGlue = new ServerGlue();
-		cacheEnabledGlue.StringCachingEnabled = true;
-		cacheEnabledGlue.StringCache = new StringCache( cacheEnabledGlue );
+		var cacheEnabledGlue = new ServerGlue
+		{
+			StringCachingEnabled = true,
+			StringCache = new StringCache()
+		};
 
 		using var stream = new MemoryStream();
 		using var writer = new NetworkMessageWriter( stream, cacheEnabledGlue );
@@ -146,9 +150,11 @@ public sealed class NetworkMessageWriterTests
 		// Given:
 		var typeToWrite = typeof( object );
 
-		var cacheEnabledGlue = new ServerGlue();
-		cacheEnabledGlue.StringCachingEnabled = true;
-		cacheEnabledGlue.StringCache = new StringCache( cacheEnabledGlue );
+		var cacheEnabledGlue = new ServerGlue
+		{
+			StringCachingEnabled = true,
+			StringCache = new StringCache()
+		};
 		var cacheId = cacheEnabledGlue.StringCache.Add( typeToWrite );
 
 		using var writeStream = new MemoryStream();
@@ -173,9 +179,11 @@ public sealed class NetworkMessageWriterTests
 		// Given:
 		var typeToWrite = typeof( object );
 
-		var cacheEnabledGlue = new ServerGlue();
-		cacheEnabledGlue.StringCachingEnabled = true;
-		cacheEnabledGlue.StringCache = new StringCache( cacheEnabledGlue );
+		var cacheEnabledGlue = new ServerGlue
+		{
+			StringCachingEnabled = true,
+			StringCache = new StringCache()
+		};
 
 		using var stream = new MemoryStream();
 		using var writer = new NetworkMessageWriter( stream, cacheEnabledGlue );

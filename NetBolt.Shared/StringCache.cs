@@ -25,18 +25,13 @@ public sealed class StringCache
 	private ConcurrentDictionary<string, uint> strings = new();
 	private ConcurrentDictionary<uint, string> stringsReversed = new();
 
-	private readonly INetBoltGlue glue;
-
-	public StringCache( INetBoltGlue glue )
+	public StringCache()
 	{
-		this.glue = glue;
 	}
 
 	[ClientOnly]
-	public StringCache( INetBoltGlue glue, in ImmutableArray<KeyValuePair<string, uint>> entries ) : this( glue )
+	public StringCache( in ImmutableArray<KeyValuePair<string, uint>> entries )
 	{
-		RealmException.ThrowIfNot( glue, Realm.Client );
-
 		for ( var i = 0; i < entries.Length; i++ )
 		{
 			var entry = entries[i];
@@ -50,8 +45,6 @@ public sealed class StringCache
 	[ClientOnly]
 	public void Swap( in ImmutableArray<KeyValuePair<string, uint>> entries )
 	{
-		RealmException.ThrowIfNot( glue, Realm.Client );
-
 		var strings = new ConcurrentDictionary<string, uint>();
 		var stringsReversed = new ConcurrentDictionary<uint, string>();
 
@@ -71,7 +64,6 @@ public sealed class StringCache
 	[ServerOnly]
 	public uint Add( string str )
 	{
-		RealmException.ThrowIfNot( glue, Realm.Server );
 		ArgumentNullException.ThrowIfNull( str, nameof( str ) );
 
 		if ( strings.ContainsKey( str ) )
@@ -89,7 +81,6 @@ public sealed class StringCache
 	[ServerOnly]
 	public void Remove( string str )
 	{
-		RealmException.ThrowIfNot( glue, Realm.Server );
 		ArgumentNullException.ThrowIfNull( str, nameof( str ) );
 
 		if ( !strings.ContainsKey( str ) )

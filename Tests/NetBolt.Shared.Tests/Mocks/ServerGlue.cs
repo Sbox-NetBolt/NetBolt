@@ -24,7 +24,7 @@ internal sealed class ServerGlue : INetBoltGlue
 	{
 		ServerHost = serverHost ?? new ServerHost();
 		StringCachingEnabled = stringCache is not null;
-		StringCache = stringCache ?? new StringCache( this );
+		StringCache = stringCache ?? new StringCache();
 	}
 
 	public object? CreateInstance( Type type )

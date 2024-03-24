@@ -17,14 +17,13 @@ internal sealed class DefaultGlue : INetBoltGlue
 
 	public bool StringCachingEnabled { get; }
 
-	public StringCache StringCache { get; }
+	public StringCache StringCache { get; } = new();
 
 	internal DefaultGlue( ILogger logger, IServerHost serverHost, bool stringCachingEnabled )
 	{
 		Logger = logger;
 		ServerHost = serverHost;
 		StringCachingEnabled = stringCachingEnabled;
-		StringCache = new( this );
 	}
 
 	public object? CreateInstance( Type type )

@@ -19,9 +19,11 @@ public class NetworkMessageTests
 		const int expectedSize = sizeof( bool ) + sizeof( uint );
 		NetworkMessage.InvalidateSizeCache();
 
-		var glue = new ServerGlue();
-		glue.StringCache = new StringCache( glue );
-		glue.StringCachingEnabled = true;
+		var glue = new ServerGlue
+		{
+			StringCache = new StringCache(),
+			StringCachingEnabled = true
+		};
 
 		// When:
 		var size = NetworkMessage.GetHeaderSize<CachedTypeNetworkMessage>( glue, Encoding.Default );
@@ -141,9 +143,11 @@ public class NetworkMessageTests
 		const float property1 = 123;
 		const string property2 = "Hello, World!";
 
-		var glue = new ClientGlue();
-		glue.StringCache = new StringCache( glue, [new KeyValuePair<string, uint>( messageTypeName, cacheId )] );
-		glue.StringCachingEnabled = true;
+		var glue = new ClientGlue
+		{
+			StringCache = new StringCache( [new KeyValuePair<string, uint>( messageTypeName, cacheId )] ),
+			StringCachingEnabled = true
+		};
 
 		using var stream = new MemoryStream();
 

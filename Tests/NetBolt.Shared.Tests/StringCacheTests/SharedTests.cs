@@ -1,22 +1,17 @@
-﻿using NetBolt.Glue;
-using NetBolt.Tests.Shared.Mocks;
-using System;
+﻿using System;
 using Xunit;
 
 namespace NetBolt.Tests.Shared.StringCacheTests;
 
 public sealed class SharedTests
 {
-	// Using the server glue so that the add calls can function.
-	private static readonly INetBoltGlue glue = new ServerGlue();
-
 	#region TryGetId
 	[Fact]
 	public void TryGetIdFromCache()
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 		var cacheId = stringCache.Add( stringToCache );
 
 		// When:
@@ -32,7 +27,7 @@ public sealed class SharedTests
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		var isCached = stringCache.TryGetId( stringToCache, out var cachedId );
@@ -48,7 +43,7 @@ public sealed class SharedTests
 		// Given:
 		const string stringToCache = null!;
 		const string tryGetIdStringParameterName = "str";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		void Execute()
@@ -68,7 +63,7 @@ public sealed class SharedTests
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 		var cacheId = stringCache.Add( stringToCache );
 
 		// When:
@@ -84,7 +79,7 @@ public sealed class SharedTests
 	{
 		// Given:
 		const uint idToLookup = 1;
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		var isCached = stringCache.TryGetString( idToLookup, out var cachedString );

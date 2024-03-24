@@ -1,7 +1,5 @@
 ﻿using NetBolt.Exceptions;
-using NetBolt.Glue;
 using NetBolt.Shared.Extensions;
-using NetBolt.Tests.Shared.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -11,15 +9,13 @@ namespace NetBolt.Tests.Shared.StringCacheTests;
 
 public sealed class ServerTests
 {
-	private static readonly INetBoltGlue glue = new ServerGlue();
-
 	[Fact]
 	public void ConstructFromEntriesThrowsOnServer()
 	{
 		// When:
 		static void Execute()
 		{
-			var stringCache = new StringCache( glue, ImmutableArray<KeyValuePair<string, uint>>.Empty );
+			var stringCache = new StringCache( ImmutableArray<KeyValuePair<string, uint>>.Empty );
 		}
 
 		// Then:
@@ -30,7 +26,7 @@ public sealed class ServerTests
 	public void SwapThrowsOnServer()
 	{
 		// Given:
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		void Execute()
@@ -49,7 +45,7 @@ public sealed class ServerTests
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		var cacheId = stringCache.Add( stringToCache );
@@ -67,7 +63,7 @@ public sealed class ServerTests
 		// Given:
 		const string stringToCache = null!;
 		const string addStringParameterName = "str";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		void Execute()
@@ -84,7 +80,7 @@ public sealed class ServerTests
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache(	);
 		stringCache.Add( stringToCache );
 
 		// When:
@@ -102,7 +98,7 @@ public sealed class ServerTests
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 		var hasStringCacheChanged = false;
 		stringCache.OnChanged += OnChanged;
 
@@ -125,7 +121,7 @@ public sealed class ServerTests
 	{
 		// Given:
 		var typeToCache = typeof( object );
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		var cacheId = stringCache.Add( typeToCache );
@@ -141,7 +137,7 @@ public sealed class ServerTests
 		// Given:
 		Type typeToCache = null!;
 		const string addTypeParameterName = "type";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		void Execute()
@@ -162,7 +158,7 @@ public sealed class ServerTests
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 		stringCache.Add( stringToCache );
 
 		// When:
@@ -178,7 +174,7 @@ public sealed class ServerTests
 		// Given:
 		const string stringToCache = null!;
 		const string removeStringParameterName = "str";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		void Execute()
@@ -196,7 +192,7 @@ public sealed class ServerTests
 		// Given:
 		const string stringToCache = "Hello, World!";
 		const string removeStringParameterName = "str";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		void Execute()
@@ -213,7 +209,7 @@ public sealed class ServerTests
 	{
 		// Given:
 		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 		stringCache.Add( stringToCache );
 		var hasStringCacheChanged = false;
 		stringCache.OnChanged += OnChanged;
@@ -236,7 +232,7 @@ public sealed class ServerTests
 	{
 		// Given:
 		var typeToCache = typeof( object );
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 		stringCache.Add( typeToCache );
 
 		// When:
@@ -252,7 +248,7 @@ public sealed class ServerTests
 		// Given:
 		Type typeToCache = null!;
 		const string removeTypeParameterName = "type";
-		var stringCache = new StringCache( glue );
+		var stringCache = new StringCache();
 
 		// When:
 		void Execute()

@@ -2,17 +2,11 @@
 
 namespace NetBolt.Extensions.Sbox;
 
-internal readonly struct SboxAuthTokenResponse
+[method: JsonConstructor]
+internal readonly struct SboxAuthTokenResponse( long steamId, string status )
 {
-	public long SteamId { get; }
-	public string Status { get; }
+	public long SteamId { get; } = steamId;
+	public string Status { get; } = status;
 
 	public bool IsComplete => SteamId != 0 && Status is not null && Status.Length != 0;
-
-	[JsonConstructor]
-	public SboxAuthTokenResponse( long steamId, string status )
-	{
-		SteamId = steamId;
-		Status = status;
-	}
 }

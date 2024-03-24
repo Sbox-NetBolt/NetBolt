@@ -30,7 +30,7 @@ internal sealed class DefaultGlue : INetBoltGlue
 	{
 		try
 		{
-			return Activator.CreateInstance( type, new object?[] { this } );
+			return Activator.CreateInstance( type, [this] );
 		}
 		catch ( Exception )
 		{

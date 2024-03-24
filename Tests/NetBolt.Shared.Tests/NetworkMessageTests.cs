@@ -363,7 +363,7 @@ public class NetworkMessageTests
 		// When:
 		static void Execute()
 		{
-			NetworkMessage.Parse<NetworkMessage>( null!, Array.Empty<byte>() );
+			NetworkMessage.Parse<NetworkMessage>( null!, [] );
 		}
 
 		// Then:
@@ -395,7 +395,7 @@ public class NetworkMessageTests
 		// When:
 		static void Execute()
 		{
-			NetworkMessage.Parse<NetworkMessage>( new ServerGlue(), Array.Empty<byte>(), null! );
+			NetworkMessage.Parse<NetworkMessage>( new ServerGlue(), [], null! );
 		}
 
 		// Then:

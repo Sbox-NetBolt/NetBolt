@@ -17,7 +17,7 @@ public sealed class StringCache
 	[ServerOnly]
 	public event ChangedHandler? OnChanged;
 
-	public ImmutableArray<KeyValuePair<string, uint>> Entries = ImmutableArray<KeyValuePair<string, uint>>.Empty;
+	public ImmutableArray<KeyValuePair<string, uint>> Entries = [];
 
 	[ServerOnly]
 	private uint CurrentId = 1;

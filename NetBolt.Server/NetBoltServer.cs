@@ -56,11 +56,11 @@ public sealed class NetBoltServer : IServerHost, IDisposable
 	private readonly int messageBufferSize;
 	private readonly bool stringCacheEnabled;
 	private readonly ArrayPool<byte> sendReceiveDataPool;
-	private readonly ConcurrentBag<WriteThread> writeThreads = new();
+	private readonly ConcurrentBag<WriteThread> writeThreads = [];
 
 	private readonly ConcurrentQueue<Client> clientsWaitingToJoin = new();
 	private readonly ConcurrentQueue<Client> clientsWaitingToLeave = new();
-	private readonly ConcurrentHashSet<Client> clients = new();
+	private readonly ConcurrentHashSet<Client> clients = [];
 
 	private readonly object startLock = new();
 	private readonly SemaphoreSlim stopSemaphore = new( 1 );
@@ -155,8 +155,7 @@ public sealed class NetBoltServer : IServerHost, IDisposable
 
 	public void Start()
 	{
-		if ( disposed )
-			throw new ObjectDisposedException( nameof( NetBoltServer ) );
+		ObjectDisposedException.ThrowIf( disposed, this );
 
 		if ( Active || socketServer.IsStarted )
 			throw new InvalidOperationException( "The server is currently running" );
@@ -184,8 +183,7 @@ public sealed class NetBoltServer : IServerHost, IDisposable
 
 	public async Task StopAsync()
 	{
-		if ( disposed )
-			throw new ObjectDisposedException( nameof( NetBoltServer ) );
+		ObjectDisposedException.ThrowIf( disposed, this );
 
 		if ( !Active || !socketServer.IsStarted )
 			throw new InvalidOperationException( "The server is not currently running" );
@@ -240,8 +238,7 @@ public sealed class NetBoltServer : IServerHost, IDisposable
 
 	public void ProcessAllEvents()
 	{
-		if ( disposed )
-			throw new ObjectDisposedException( nameof( NetBoltServer ) );
+		ObjectDisposedException.ThrowIf( disposed, this );
 
 		ProcessIncomingClients();
 
@@ -256,8 +253,7 @@ public sealed class NetBoltServer : IServerHost, IDisposable
 
 	public void ProcessIncomingClients()
 	{
-		if ( disposed )
-			throw new ObjectDisposedException( nameof( NetBoltServer ) );
+		ObjectDisposedException.ThrowIf( disposed, this );
 
 		while ( clientsWaitingToJoin.TryDequeue( out var client ) )
 		{
@@ -269,8 +265,7 @@ public sealed class NetBoltServer : IServerHost, IDisposable
 
 	public void ProcessOutgoingClients()
 	{
-		if ( disposed )
-			throw new ObjectDisposedException( nameof( NetBoltServer ) );
+		ObjectDisposedException.ThrowIf( disposed, this );
 
 		while ( clientsWaitingToLeave.TryDequeue( out var client ) )
 		{
@@ -283,8 +278,7 @@ public sealed class NetBoltServer : IServerHost, IDisposable
 
 	public void ProcessClientEvents( Client client )
 	{
-		if ( disposed )
-			throw new ObjectDisposedException( nameof( NetBoltServer ) );
+		ObjectDisposedException.ThrowIf( disposed, this );
 
 		ArgumentNullException.ThrowIfNull( client );
 
@@ -310,8 +304,7 @@ public sealed class NetBoltServer : IServerHost, IDisposable
 
 	public Client? GetClientByIdentifier( in ClientIdentifier identifier )
 	{
-		if ( disposed )
-			throw new ObjectDisposedException( nameof( NetBoltServer ) );
+		ObjectDisposedException.ThrowIf( disposed, this );
 
 		var foundClient = default( Client );
 

@@ -15,7 +15,7 @@ public sealed class ServerTests
 		// When:
 		static void Execute()
 		{
-			var stringCache = new StringCache( ImmutableArray<KeyValuePair<string, uint>>.Empty );
+			var stringCache = new StringCache( [] );
 		}
 
 		// Then:
@@ -31,7 +31,7 @@ public sealed class ServerTests
 		// When:
 		void Execute()
 		{
-			stringCache.Swap( ImmutableArray<KeyValuePair<string, uint>>.Empty );
+			stringCache.Swap( [] );
 		}
 
 		// Then:

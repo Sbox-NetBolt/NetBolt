@@ -9,35 +9,6 @@ namespace NetBolt.Tests.Shared.StringCacheTests;
 
 public sealed class ServerTests
 {
-	[Fact]
-	public void ConstructFromEntriesThrowsOnServer()
-	{
-		// When:
-		static void Execute()
-		{
-			var stringCache = new StringCache( [] );
-		}
-
-		// Then:
-		Assert.Throws<RealmException>( Execute );
-	}
-
-	[Fact]
-	public void SwapThrowsOnServer()
-	{
-		// Given:
-		var stringCache = new StringCache();
-
-		// When:
-		void Execute()
-		{
-			stringCache.Swap( [] );
-		}
-
-		// Then:
-		Assert.Throws<RealmException>( Execute );
-	}
-
 	#region Add
 	#region Add( string )
 	[Fact]

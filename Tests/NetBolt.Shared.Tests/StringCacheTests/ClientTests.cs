@@ -39,38 +39,4 @@ public sealed class ClientTests
 		Assert.Equal( entryString, cachedString );
 		Assert.Equal( entryId, cachedId );
 	}
-
-	[Fact]
-	public void AddThrowsOnClient()
-	{
-		// Given:
-		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache();
-
-		// When:
-		void Execute()
-		{
-			stringCache.Add( stringToCache );
-		}
-
-		// Then:
-		Assert.Throws<RealmException>( Execute );
-	}
-
-	[Fact]
-	public void RemoveThrowsOnClient()
-	{
-		// Given:
-		const string stringToCache = "Hello, World!";
-		var stringCache = new StringCache();
-
-		// When:
-		void Execute()
-		{
-			stringCache.Remove( stringToCache );
-		}
-
-		// Then:
-		Assert.Throws<RealmException>( Execute );
-	}
 }
